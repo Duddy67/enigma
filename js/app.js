@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function swapLetter(letter) {
 	  //alert(letter);
+        rotor.forward();
 	return rotor.getOutput(letter);
     }
 });

@@ -42,11 +42,12 @@ CRotor = (function () {
 	},
 
         forward: function () {
-	    this._position = this._position == 25 ? 0 : this._position++;
+	    this._position = this._position == 25 ? 0 : this._position + 1;
+	  console.log(this._position);
 	},
 
         back: function () {
-	    this._position = this._position == 0 ? 25 : this._position--;
+	    this._position = this._position == 0 ? 25 : this._position - 1;
 	},
 
         _slideLetters: function (letter, position) {
@@ -62,7 +63,7 @@ CRotor = (function () {
 	    let newStart = 0;
 	    // The initial position of the first letter that "went out of" the array due to the current position.
 	    let shift = _letters.length - (currentPosition - initialPosition);
-console.log('currentPosition: '+currentPosition+' initialPosition:'+initialPosition+' initialStartPosition: '+initialStartPosition+' shift: '+shift);
+//console.log('currentPosition: '+currentPosition+' initialPosition:'+initialPosition+' initialStartPosition: '+initialStartPosition+' shift: '+shift);
 
 	    // The letter is at its initial position.
 	    if (initialPosition + 1 == position) {
@@ -99,16 +100,16 @@ console.log('currentPosition: '+currentPosition+' initialPosition:'+initialPosit
 	},
 
         getOutput: function (letter) {
-	    let rgtWiring = this._right[this._position];
-	    let lftWiring = this._left[this._position];
+	    let rgtPin = this._right[this._position];
+	    let lftPin = this._left[this._position];
 
 	    /*if (start == end) {
 	        return letter;
 	    }*/
 
-	    let letters = this._slideLetters(letter, rgtWiring);
+	    let letters = this._slideLetters(letter, rgtPin);
 
-	    return letters[lftWiring - 1];
+	    return letters[lftPin - 1];
 
 	}
     };
