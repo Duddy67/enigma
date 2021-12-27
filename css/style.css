@@ -1,0 +1,49 @@
+.keys, .bulbs {
+    margin-right: 20px;
+    border-radius: 1.25rem !important;
+}
+
+.keys {
+}
+
+.bulbs {
+    background-color: #212121;
+}
+
+.switchedOn {
+    background-color: #fc9d03;
+}
+
+.switchedOff {
+    background-color: #212121;
+}
+
+.keyRows {
+    margin-bottom: 20px;
+}
+
+.bulbRows {
+    margin-bottom: 20px;
+}
+
+.keyContainer {
+    background-color: #a1a1a1;
+    padding: 15px;
+}
+
+.bulbContainer {
+    background-color: #d1d1d1;
+    padding: 15px;
+}
+
+.btn-dark {
+    border-color: #ffffff !important;
+}
+
+.keys, .bulbs {
+    border-radius: 1.25rem !important;
+}
+
+.key-shadow {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .90)
+}
