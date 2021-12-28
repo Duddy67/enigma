@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const rotor = new CRotor.init();
+    const rotor3 = new CRotor.init(3);
+    const rotor2 = new CRotor.init(2);
+    const rotor1 = new CRotor.init(1);
     //console.log(rotor);
     //console.log(rotor._slideLetters('D', 4));
-    console.log(rotor.getOutput('U'));
+    //console.log(rotor.getOutput('U'));
 
 
     const keyboard = new CKeyboard.init();
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function swapLetter(letter) {
 	  //alert(letter);
-        rotor.forward();
-	return rotor.getOutput(letter);
+        rotor1.forward();
+	return rotor1.getOutput(letter);
     }
 });
