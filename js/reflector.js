@@ -20,7 +20,7 @@ CReflector = (function () {
 	 * @return  void
 	 */ 
         _createWiring: function () {
-	    // Loop through the regular letter sequence (which correspond to the regular array index: 0,1,2...).
+	    // Loop through the regular letter sequence (which correspond to the array indexes: 0,1,2...).
 	    _alphabet.forEach((letter, i) => {
 	        // Get the index of the corresponding letter in the offset array.  
 	        let id = _alphabet.indexOf(_offset[i]); 

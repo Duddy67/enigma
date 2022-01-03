@@ -56,16 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function swapLetter(letter) {
         rotor3.stepForward();
 	let letterNb = _alphabet.indexOf(letter);
-        letterNb = rotor3.getContact(letterNb, 0);
+        letterNb = rotor3.getLeftOutput(letterNb, 0);
 	  //console.log('pos '+rotor3._letterNb);
-        letterNb = rotor2.getContact(letterNb, rotor3.getPosition());
-        letterNb = rotor1.getContact(letterNb, rotor2.getPosition());
+        letterNb = rotor2.getLeftOutput(letterNb, rotor3.getPosition());
+        letterNb = rotor1.getLeftOutput(letterNb, rotor2.getPosition());
 
         letterNb = reflector.getOutput(letterNb, rotor1.getPosition());
 
-        letterNb = rotor1.getPin(letterNb, rotor2.getPosition());
-        letterNb = rotor2.getPin(letterNb, rotor3.getPosition());
-        letterNb = rotor3.getPin(letterNb, 0);
+        letterNb = rotor1.getRightOutput(letterNb, rotor2.getPosition());
+        letterNb = rotor2.getRightOutput(letterNb, rotor3.getPosition());
+        letterNb = rotor3.getRightOutput(letterNb, 0);
 	  //console.log('pos '+letterNb);
 //console.log('contacts: '+rotor1._contacts);
 	return _alphabet[letterNb];
