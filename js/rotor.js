@@ -1,25 +1,21 @@
 CRotor = (function () {
-
+    // The regular letter sequence. The number for each letter is equal to its index A -> 0, B -> 1 etc...
     const _alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-    const _stator = ['Q','W','E','R','T','Z','U','I','O','A','S','D','F','G','H','J','K','P','Y','X','C','V','B','N','M','L'];
-    const _offset_1 = ['L','P','G','S','Z','M','H','A','E','O','Q','K','V','X','R','F','Y','B','U','T','N','I','C','J','D','W'];
-    const _offset_2 = ['S','L','V','G','B','T','F','X','J','Q','O','H','E','W','I','R','Z','Y','A','M','K','P','C','N','D','U'];
-    const _offset_3 = ['C','J','G','D','P','S','H','K','T','U','R','A','W','Z','X','F','M','Y','N','Q','O','B','V','L','I','E'];
-    const _reflector = ['I','M','E','T','C','G','F','R','A','Y','S','Q','B','Z','X','W','L','H','K','D','V','U','P','O','J','N'];
+    // The offsets used to create the wiring of the 3 rotors. 0 (A) -> 4 (E), 1 (B) -> 10 (K) etc...
+    const _offset_1 = ['E','K','M','F','L','G','D','Q','V','Z','N','T','O','W','Y','H','X','U','S','P','A','I','B','R','C','J'];
+    const _offset_2 = ['A','J','D','K','S','I','R','U','X','B','L','H','W','T','M','C','Q','G','Z','N','P','Y','F','V','O','E'];
+    const _offset_3 = ['B','D','F','H','J','L','C','P','R','T','X','V','Z','N','Y','E','I','W','G','A','K','M','U','S','Q','O'];
     const _offsets = {_offset_1, _offset_2, _offset_3};
 
 
     const Rotor = function (id) {
-
         this._id = id;
-        this._pins = null;
-        this._contacts = null;
         this._position = 0;
         this._notch = null;
+        this._wiring = [];
 
+        this._createWiring();
         this._createRotor();
-        this._createInternalWiring();
-
     };
 
     // Methods
@@ -36,114 +32,114 @@ CRotor = (function () {
 	    positionNumber.setAttribute('class', 'positionNumber');
 	    positionNumber.textContent = '01';
 
+	    let forwardBtn = document.createElement('button');
+	    forwardBtn.setAttribute('data-rotor', this._id);
+	    forwardBtn.setAttribute('class', 'forwardButton');
+	    forwardBtn.textContent = 'F';
+
+	    let backBtn = document.createElement('button');
+	    backBtn.setAttribute('data-rotor', this._id);
+	    backBtn.setAttribute('class', 'backButton');
+	    backBtn.textContent = 'B';
+
 	    let wheel = document.createElement('div');
 	    wheel.setAttribute('class', 'wheel');
 
+	    document.getElementById('rotorContainer_'+this._id).appendChild(forwardBtn);
 	    document.getElementById('rotorContainer_'+this._id).appendChild(positionNumber);
+	    document.getElementById('rotorContainer_'+this._id).appendChild(backBtn);
 	    document.getElementById('rotorContainer_'+this._id).appendChild(wheel);
 	    document.getElementById('rotors').appendChild(rotorContainer);
 	},
 
-        _createInternalWiring: function () {
-	    // The connections on each side of the rotor.
-	    this._pins = [];
-	    this._contacts = [];
-console.log(_offsets['_offset_'+this._id]);
-	    // Loop through the alphabet letters.
+        /*
+	 * Sets the connections between the 26 contacts of the rotor.
+	 *
+	 * @return  void
+	 */ 
+        _createWiring: function () {
+	    // Get the offset according to the rotor id.
+	    let offset = _offsets['_offset_'+this._id];
+
+	    // Loop through the regular letter sequence (which correspond to the regular array indexes: 0,1,2...).
 	    _alphabet.forEach((letter, i) => {
-	        // Set the pin position for each letter.
-	        let pinPosition = i + 1;
-	        this._pins.push(pinPosition);
-
-	        // Get the letter set to the same position in the offset.
-	        let offsetLetter = _offset_1[i];
-
-	        // Loop again to match the alphabet position to the offset position.
 	        for (let j = 0; j < _alphabet.length; j++){
-		    let contactPosition = j + 1;
-
-		    if (_alphabet[j] == offsetLetter) {
-			this._contacts.push(contactPosition);
+		    if (_alphabet[j] == offset[i]) {
+			this._wiring.push(j);
 		    }
 		}
 	    });
 	},
 
-        forward: function () {
+        stepForward: function () {
 	    this._position = this._position == 25 ? 0 : this._position + 1;
-
+            let nb = this._position + 1;
 	    let position = document.getElementById('positionNumber_'+this._id);
-	    position.textContent = this._pins[this._position] < 10 ? '0'+this._pins[this._position] : this._pins[this._position];
+	    position.textContent = nb < 10 ? '0'+nb : nb;
 	},
 
-        back: function () {
+        stepBack: function () {
 	    this._position = this._position == 0 ? 25 : this._position - 1;
-
+            let nb = this._position + 1;
 	    let position = document.getElementById('positionNumber_'+this._id);
-	    position.textContent = this._pins[this._position] < 10 ? '0'+this._pins[this._position] : this._pins[this._position];
+	    position.textContent = nb < 10 ? '0'+nb : nb;
 	},
 
-        _setLetterString: function (letterString, letter, position) {
+        getContact: function (letterNb, rgtRotorPos, direction) {
+	    let offset = rgtRotorPos == 0 ? this._position : this._position - rgtRotorPos;
 
-	    let letters = [];
-	    let currentPosition = position - 1;
-	    // The initial position of the given letter.
-	    let initialPosition = letterString.indexOf(letter);
-	    // Compute the initial start position by taking into account the offset due to the current position.
-	    let initialStartPosition = currentPosition - initialPosition;
-	    // The start position for the previous letters (if any).
-	    let previous = currentPosition < initialPosition ? initialPosition - currentPosition : 0;
-	    let startOver = 0;
-	    // The initial position of the first letter that "went out of" the array due to the current position.
-	    let shift = letterString.length - (currentPosition - initialPosition);
-//console.log('currentPosition: '+currentPosition+' initialPosition:'+initialPosition+' initialStartPosition: '+initialStartPosition+' shift: '+shift);
+	    let offsetPos = letterNb;
 
-	    // The letter is at its initial position.
-	    if (initialPosition + 1 == position) {
-	        // No need to modify the letter string.
-		return letterString;
-	    }
-
-	    for (let i = 0; i < letterString.length; i++) {
-	        // Store the letters from the current position to the last initial position.
-	        if (i >= currentPosition && letterString[initialPosition] !== undefined) {
-		    letters.push(letterString[initialPosition]);
-		    initialPosition++;
-		}
-	        // The last initial position has been reached. 
-	        // Start over from the zero position.
-	        else if (letterString[initialPosition] === undefined) {
-		    letters.push(letterString[startOver]);
-		    startOver++;
-		}
-	        // Store the letters preceding the given letter (if any).
-	        else if (i < currentPosition && i >= initialStartPosition) {
-		    letters.push(letterString[previous]);
-		    previous++;
-		}
-	        // Store (at the beginning of the array) the remaining letters which have exceeded the last initial position.  
-	        else {
-		    letters.push(letterString[shift]);
-		    shift++;
+	    if (offset < 0) {
+	        offset = Math.abs(offset);
+		for (let i = 0; i < offset; i++) {
+		    offsetPos--;
+		    offsetPos = offsetPos < 0 ? 25 : offsetPos;
 		}
 	    }
+	    else {
+		for (let i = 0; i < offset; i++) {
+		    offsetPos++;
+		    offsetPos = offsetPos > 25 ? 0 : offsetPos;
+		}
+	    }
+console.log('go output: '+_alphabet[this._wiring[offsetPos]]);
 
-	    return letters;
+	    return this._wiring[offsetPos];
 	},
 
-        getOutput: function (letter) {
-	    let pin = this._pins[this._position];
-	    let contact = this._contacts[this._position];
+        getPin: function (letterNb, rgtRotorPos) {
+	    /*if (this._id == 1) {
+	        letterNb = this._wiring.indexOf(letterNb);
+	    }*/
 
-	    // No offset, so the letter doesn't change.
-	    if (pin == contact) {
-	        return letter;
+	    offset = rgtRotorPos == 0 ? 0 - this._position : rgtRotorPos - this._position;
+	    let offsetPos = this._wiring.indexOf(letterNb);
+
+console.log('r'+this._id+': initial letterNb: '+letterNb+' opposite pos: '+offsetPos);
+//console.log('offset r'+this._id+': '+offset+' offsetPos: '+offsetPos);
+
+	    if (offset < 0) {
+	        offset = Math.abs(offset);
+		for (let i = 0; i < offset; i++) {
+		    offsetPos--;
+		    offsetPos = offsetPos < 0 ? 25 : offsetPos;
+		}
 	    }
+	    else {
+		for (let i = 0; i < offset; i++) {
+		    offsetPos++;
+		    offsetPos = offsetPos > 25 ? 0 : offsetPos;
+		}
+	    }
+console.log('back r'+this._id+' output: '+_alphabet[offsetPos]+' : '+offsetPos);
+console.log('--------------------------------------------------');
 
-	    let letters = this._setLetterString(_alphabet, letter, pin);
+	    return offsetPos;
+	},
 
-	    return letters[contact - 1];
-
+        getPosition: function () {
+	    return this._position;
 	}
     };
 

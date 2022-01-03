@@ -58,30 +58,36 @@
     background-color: #d1d1d1;
     overflow: hidden;
     width: 50px;
-    height: 80px;
+    height: 120px;
     margin-right: 20px;
+}
+
+.forwardButton {
+}
+
+.backButton {
+    float: left;
 }
 
 .positionNumber {
     background-color: white;
     /*padding: 15px;*/
-    float: left;
     width: 30px;
     border-style: inset;
     border-width: 2px;
     text-align: center;
-    margin-top: 25px;
-    margin-right: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .wheel {
-    float: left;
+    float: right;
     background-color: #3d3d3d;
     width: 10px;
     height: 80px;
 }
 
-#rotorContainer_3, #rotorContainer_2 {
+#rotorContainer_1, #rotorContainer_2 {
     float: left;
 }
 
