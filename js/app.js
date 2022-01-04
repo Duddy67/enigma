@@ -45,16 +45,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function forwardButton(button) {
         const rotorId = button.dataset.rotor;
-        const rotor = rotors['rotor'+rotorId].stepForward();
+        const rotor = rotors['rotor'+rotorId].forward();
     }
 
     function backButton(button) {
         const rotorId = button.dataset.rotor;
-        const rotor = rotors['rotor'+rotorId].stepBack();
+        const rotor = rotors['rotor'+rotorId].backward();
     }
 
     function swapLetter(letter) {
+
+	if (rotor3.getNotch() == rotor2.getNotch() && rotor2.getStepNb() == rotor3.getNbOfTurns()) {
+	    rotor2.stepForward();
+	}
+
+        if (rotor2.getNotch() == rotor1.getNotch() && rotor1.getStepNb() == rotor2.getNbOfTurns()) {
+	    rotor1.stepForward();
+	}
+
         rotor3.stepForward();
+
 	let letterNb = _alphabet.indexOf(letter);
         letterNb = rotor3.getLeftOutput(letterNb, 0);
 	  //console.log('pos '+rotor3._letterNb);
