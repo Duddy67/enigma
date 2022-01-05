@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const keyboard = new CKeyboard.init();
 
+    const plugboard = new CPlugboard.init();
+
     //let keys = document.getElementsByClassName('keys');
     let keys = document.querySelectorAll('.keys');
 
@@ -42,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, true);
     });
 
+    let sockets = document.querySelectorAll('.sockets');
+
+    sockets.forEach((socket) => {
+        socket.addEventListener('click', function() {
+	    plugboard.connection(socket);
+	}, true);
+    });
 
     function forwardButton(button) {
         const rotorId = button.dataset.rotor;
@@ -65,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rotor3.stepForward();
 
+        // Grab the letter number associated to the pressed key.
 	let letterNb = _alphabet.indexOf(letter);
+
         letterNb = rotor3.getLeftOutput(letterNb, 0);
-	  //console.log('pos '+rotor3._letterNb);
         letterNb = rotor2.getLeftOutput(letterNb, rotor3.getPosition());
         letterNb = rotor1.getLeftOutput(letterNb, rotor2.getPosition());
 
@@ -76,8 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letterNb = rotor1.getRightOutput(letterNb, rotor2.getPosition());
         letterNb = rotor2.getRightOutput(letterNb, rotor3.getPosition());
         letterNb = rotor3.getRightOutput(letterNb, 0);
-	  //console.log('pos '+letterNb);
-//console.log('contacts: '+rotor1._contacts);
+
 	return _alphabet[letterNb];
     }
 });
