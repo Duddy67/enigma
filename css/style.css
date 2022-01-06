@@ -91,4 +91,33 @@
     float: left;
 }
 
+.plugboardRows {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.socketContainer {
+    background-color: #DDD;
+    color: #999;
+    float: left;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.socketLabel {
+    margin-bottom: 0 !important;
+}
+
+.socketLetter {
+    border-style: inset;
+    border-width: 2px;
+    width: 20px;
+    text-align: center;
+}
+
+.sockets {
+    display: block;
+    margin: 0 auto;
+    margin-bottom:  5px;
+}
 
