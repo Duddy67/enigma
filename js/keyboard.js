@@ -4,7 +4,7 @@ CKeyboard = (function () {
 
 	this._keyContainer = null;
 	this._bulbContainer = null;
-	this._keys = ['Q','W','E','R','T','Z','U','I','O','A','S','D','F','G','H','J','K','P','Y','X','C','V','B','N','M','L'];
+	this._letters = ['Q','W','E','R','T','Z','U','I','O','A','S','D','F','G','H','J','K','P','Y','X','C','V','B','N','M','L'];
         this._createBoard('bulb');
         this._createBoard('key');
     };
@@ -20,7 +20,7 @@ CKeyboard = (function () {
 
 	    let rowId = 0;
 
-	    this._keys.forEach(function (letter, i) {
+	    this._letters.forEach(function (letter, i) {
 	        // Create the 3 rows which contain the keys/bulbs.
 	        if (i == 0 || i == 9 || i == 17) {
 		    rowId++;
@@ -30,19 +30,23 @@ CKeyboard = (function () {
 		    document.getElementById(type+'Container').appendChild(row);
 	        }
 
-	        let key = document.createElement('button');
-	        let shadow = type == 'key' ? 'key-shadow' : '';
-	        key.setAttribute('class', 'btn '+shadow+' btn-dark '+type+'s');
+	        // Create the keyboard item according to the given type.
+	        let item;
 
 	        if (type == 'key') {
-		    key.setAttribute('data-letter', letter);
+		    item = document.createElement('button');
+		    item.setAttribute('class', 'btn key-shadow btn-dark keys');
+		    item.setAttribute('data-letter', letter);
 		}
+	        // Bulbs
 	        else {
-		    key.setAttribute('id', 'letter_'+letter);
+		    item = document.createElement('div');
+		    item.setAttribute('class', 'badge badge-pill bulbs');
+		    item.setAttribute('id', 'letter_'+letter);
 		}
 
-	        key.textContent = letter;
-	        document.getElementById(type+'Row-'+rowId).appendChild(key);
+	        item.textContent = letter;
+	        document.getElementById(type+'Row-'+rowId).appendChild(item);
 	    }); 
 	},
 

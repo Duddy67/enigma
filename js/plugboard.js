@@ -60,57 +60,68 @@ CPlugboard = (function () {
 	    }); 
 	},
 
-        _setConnection: function (letterNb) {
-            this._connections[this._onHold] = letterNb;
-
-	    document.getElementById('socket_'+this._onHold).classList.add('disabled');
-	    document.getElementById('socket_'+letterNb).classList.add('disabled');
-	    document.getElementById('socketLetter_'+this._onHold).textContent = _alphabet[letterNb];
-	    document.getElementById('socketLetter_'+letterNb).textContent = _alphabet[this._onHold];
-
-	    this._onHold = null;
-
-console.log('_setConnection: '+this._connections);
-	},
-
-        _getConnection: function (letterNb) {
-	},
-
         connection: function (socket) {
-	    //alert(socket.getAttribute('id'));
+	    // Get the corresponding letter number.
 	    const letterNb = socket.dataset.letterNb;
 
 //console.log('test: '+this._connections[letterNb]);
 	    if (this._connections.indexOf(letterNb) < 0 && !this._connections[letterNb] && !this._onHold) {
-console.log('1: ');
+	        // Put the letter number on hold until the next click.
 	        this._onHold = letterNb;
 	    }
 	    else if (this._connections.indexOf(letterNb) < 0 && !this._connections[letterNb] && this._onHold) {
-console.log('2: ');
-	        this._setConnection(letterNb);
+	        if (letterNb != this._onHold) {
+		    this._connections[this._onHold] = letterNb;
+		    this._connections[letterNb] = this._onHold;
+
+		    document.getElementById('socketLetter_'+this._onHold).classList.add('socketConnection');
+		    document.getElementById('socketLetter_'+letterNb).classList.add('socketConnection');
+		    document.getElementById('socketLetter_'+this._onHold).textContent = _alphabet[letterNb];
+		    document.getElementById('socketLetter_'+letterNb).textContent = _alphabet[this._onHold];
+		}
+console.log('connections: '+this._connections);
+
+		this._onHold = null;
 	    }
 	    else if (this._connections.indexOf(letterNb) >= 0 || this._connections[letterNb]) {
 console.log('indexOf: '+this._connections.indexOf(letterNb)+' : '+this._connections[letterNb]);
 
 	        if (this._connections[letterNb]) {
-		    document.getElementById('socket_'+this._connections[letterNb]).classList.remove('disabled');
+		    document.getElementById('socketLetter_'+this._connections[letterNb]).classList.remove('socketConnection');
 		    document.getElementById('socketLetter_'+this._connections[letterNb]).textContent = _alphabet[this._connections[letterNb]];
 		    document.getElementById('socket_'+this._connections[letterNb]).checked = false;
+
+		    const conLetter = this._connections[letterNb];
 		    this._connections[letterNb] = null;
+		    this._connections[conLetter] = null;
 		}
 	        else {
-		    document.getElementById('socket_'+this._connections.indexOf(letterNb)).classList.remove('disabled');
+		    document.getElementById('socketLetter_'+this._connections.indexOf(letterNb)).classList.remove('socketConnection');
 		    document.getElementById('socketLetter_'+this._connections.indexOf(letterNb)).textContent = _alphabet[this._connections.indexOf(letterNb)];
 		    document.getElementById('socket_'+this._connections.indexOf(letterNb)).checked = false;
+
+		    const conLetter = this._connections[this._connections.indexOf(letterNb)];
 		    this._connections[this._connections.indexOf(letterNb)] = null;
+		    this._connections[conLetter] = null;
 		}
 
 		document.getElementById('socketLetter_'+letterNb).textContent = _alphabet[letterNb];
+		document.getElementById('socketLetter_'+letterNb).classList.remove('socketConnection');
 
 console.log('cancelConnection: '+this._connections);
 	    }
 
 	    //alert(socket.dataset.letterNb);
+	},
+
+        output: function (letterNb) {
+console.log('plugboard input: '+letterNb);
+	    if (!this._connections[letterNb] && this._connections.indexOf(letterNb) === -1) {
+console.log('plugboard output no connection: '+letterNb);
+	        return letterNb;
+	    }
+
+	    return this._connections[letterNb] ? this._connections[letterNb] : this._connections.indexOf(letterNb);
 	},
     };
 

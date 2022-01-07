@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Grab the letter number associated to the pressed key.
 	let letterNb = _alphabet.indexOf(letter);
 
+        letterNb = plugboard.output(letterNb);
+
         letterNb = rotor3.getLeftOutput(letterNb, 0);
         letterNb = rotor2.getLeftOutput(letterNb, rotor3.getPosition());
         letterNb = rotor1.getLeftOutput(letterNb, rotor2.getPosition());
@@ -86,6 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
         letterNb = rotor1.getRightOutput(letterNb, rotor2.getPosition());
         letterNb = rotor2.getRightOutput(letterNb, rotor3.getPosition());
         letterNb = rotor3.getRightOutput(letterNb, 0);
+
+        letterNb = plugboard.output(letterNb);
 
 	return _alphabet[letterNb];
     }

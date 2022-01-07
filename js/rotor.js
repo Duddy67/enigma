@@ -40,6 +40,10 @@ CRotor = (function () {
 	    rotorContainer.setAttribute('id', 'rotorContainer_'+this._id);
 	    rotorContainer.setAttribute('class', 'rotorContainer');
 	    document.getElementById('enigma').appendChild(rotorContainer);
+	    let rotorLeftSide = document.createElement('div');
+	    rotorLeftSide.setAttribute('id', 'rotorLeftSide_'+this._id);
+	    rotorLeftSide.setAttribute('class', 'rotorLeftSide');
+	    document.getElementById('rotorContainer_'+this._id).appendChild(rotorLeftSide);
 
 	    let positionNumber = document.createElement('div');
 	    positionNumber.setAttribute('id', 'positionNumber_'+this._id);
@@ -48,20 +52,26 @@ CRotor = (function () {
 
 	    let forwardBtn = document.createElement('button');
 	    forwardBtn.setAttribute('data-rotor', this._id);
-	    forwardBtn.setAttribute('class', 'forwardButton');
-	    forwardBtn.textContent = 'F';
+	    forwardBtn.setAttribute('class', 'btn key-shadow btn-dark forwardButton');
+	    forwardBtn.setAttribute('id', 'forwardButton_'+this._id);
+	    let forwardIcon = document.createElement('i');
+	    forwardIcon.setAttribute('class', 'fas fa-angle-double-up');
 
 	    let backBtn = document.createElement('button');
 	    backBtn.setAttribute('data-rotor', this._id);
-	    backBtn.setAttribute('class', 'backButton');
-	    backBtn.textContent = 'B';
+	    backBtn.setAttribute('class', 'btn key-shadow btn-dark backButton');
+	    backBtn.setAttribute('id', 'backButton_'+this._id);
+	    let backIcon = document.createElement('i');
+	    backIcon.setAttribute('class', 'fas fa-angle-double-down');
 
 	    let wheel = document.createElement('div');
 	    wheel.setAttribute('class', 'wheel');
 
-	    document.getElementById('rotorContainer_'+this._id).appendChild(forwardBtn);
-	    document.getElementById('rotorContainer_'+this._id).appendChild(positionNumber);
-	    document.getElementById('rotorContainer_'+this._id).appendChild(backBtn);
+	    document.getElementById('rotorLeftSide_'+this._id).appendChild(forwardBtn);
+	    document.getElementById('forwardButton_'+this._id).appendChild(forwardIcon);
+	    document.getElementById('rotorLeftSide_'+this._id).appendChild(positionNumber);
+	    document.getElementById('rotorLeftSide_'+this._id).appendChild(backBtn);
+	    document.getElementById('backButton_'+this._id).appendChild(backIcon);
 	    document.getElementById('rotorContainer_'+this._id).appendChild(wheel);
 	    document.getElementById('rotors').appendChild(rotorContainer);
 	},
