@@ -1,3 +1,10 @@
+.enigma {
+    width: 650px;
+    margin: auto;
+    background-color: #d1d1d1;
+    border-width: 10px; border-style: solid; border-color: #da7d00;
+}
+
 .keys, .bulbs {
     margin-right: 20px;
     border-radius: 1.25rem !important;
@@ -25,11 +32,21 @@
 }
 
 .keyRows {
+    margin-left: 10px;
     margin-bottom: 20px;
 }
 
 .bulbRows {
+    margin-left: 10px;
     margin-bottom: 20px;
+}
+
+#bulbRow-1, #keyRow-1 {
+    margin-left: 40px;
+}
+
+#bulbRow-2, #keyRow-2 {
+    margin-left: 60px;
 }
 
 .keyContainer {
@@ -58,6 +75,8 @@
 .rotors {
     background-color: #d1d1d1;
     overflow: hidden;
+    padding-top: 20px;
+    margin-left: 20px;
 }
 
 .rotorContainer {
@@ -114,14 +133,19 @@
 
 .plugboardRows {
     overflow: hidden;
+    margin-left: 120px;
     margin-bottom: 10px;
+}
+
+#plugboardRow-2 {
+    margin-left: 140px;
 }
 
 .socketContainer {
     background-color: #ddd;
     float: left;
     text-align: center;
-    margin-right: 15px;
+    margin-right: 25px;
 }
 
 .socketLabel {

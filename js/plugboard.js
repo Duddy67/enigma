@@ -60,64 +60,67 @@ CPlugboard = (function () {
 	    }); 
 	},
 
+	/*
+	 * Set up a connection between 2 letters.
+	 *
+	 * @param object socket		The clicked checkbox.
+	 *
+	 * @return  void
+	 */
         connection: function (socket) {
 	    // Get the corresponding letter number.
 	    const letterNb = socket.dataset.letterNb;
 
-//console.log('test: '+this._connections[letterNb]);
+	    // A socket has just been clicked.
 	    if (this._connections.indexOf(letterNb) < 0 && !this._connections[letterNb] && !this._onHold) {
 	        // Put the letter number on hold until the next click.
 	        this._onHold = letterNb;
 	    }
+	    // A second socket has been clicked. 
 	    else if (this._connections.indexOf(letterNb) < 0 && !this._connections[letterNb] && this._onHold) {
+	        // Ensure the same socket is not clicked again.
 	        if (letterNb != this._onHold) {
+		    // Set the connection between the 2 sockets.
 		    this._connections[this._onHold] = letterNb;
 		    this._connections[letterNb] = this._onHold;
 
 		    document.getElementById('socketLetter_'+this._onHold).classList.add('socketConnection');
 		    document.getElementById('socketLetter_'+letterNb).classList.add('socketConnection');
+		    // Show the corresponding letters at the bottom of each socket. 
 		    document.getElementById('socketLetter_'+this._onHold).textContent = _alphabet[letterNb];
 		    document.getElementById('socketLetter_'+letterNb).textContent = _alphabet[this._onHold];
 		}
-console.log('connections: '+this._connections);
 
 		this._onHold = null;
 	    }
-	    else if (this._connections.indexOf(letterNb) >= 0 || this._connections[letterNb]) {
-console.log('indexOf: '+this._connections.indexOf(letterNb)+' : '+this._connections[letterNb]);
+	    // The socket of an existing connection has been clicked.
+	    else if (this._connections[letterNb]) {
+	        // Get the connected letter. 
+		const connectedLtr = this._connections[letterNb];
 
-	        if (this._connections[letterNb]) {
-		    document.getElementById('socketLetter_'+this._connections[letterNb]).classList.remove('socketConnection');
-		    document.getElementById('socketLetter_'+this._connections[letterNb]).textContent = _alphabet[this._connections[letterNb]];
-		    document.getElementById('socket_'+this._connections[letterNb]).checked = false;
+                // Cancel the connection.
+		document.getElementById('socketLetter_'+this._connections[letterNb]).classList.remove('socketConnection');
+		document.getElementById('socketLetter_'+this._connections[letterNb]).textContent = _alphabet[this._connections[letterNb]];
+		document.getElementById('socketLetter_'+this._connections[connectedLtr]).classList.remove('socketConnection');
+		document.getElementById('socketLetter_'+this._connections[connectedLtr]).textContent = _alphabet[this._connections[connectedLtr]];
+		document.getElementById('socket_'+this._connections[letterNb]).checked = false;
 
-		    const conLetter = this._connections[letterNb];
-		    this._connections[letterNb] = null;
-		    this._connections[conLetter] = null;
-		}
-	        else {
-		    document.getElementById('socketLetter_'+this._connections.indexOf(letterNb)).classList.remove('socketConnection');
-		    document.getElementById('socketLetter_'+this._connections.indexOf(letterNb)).textContent = _alphabet[this._connections.indexOf(letterNb)];
-		    document.getElementById('socket_'+this._connections.indexOf(letterNb)).checked = false;
-
-		    const conLetter = this._connections[this._connections.indexOf(letterNb)];
-		    this._connections[this._connections.indexOf(letterNb)] = null;
-		    this._connections[conLetter] = null;
-		}
-
-		document.getElementById('socketLetter_'+letterNb).textContent = _alphabet[letterNb];
-		document.getElementById('socketLetter_'+letterNb).classList.remove('socketConnection');
-
-console.log('cancelConnection: '+this._connections);
+		this._connections[letterNb] = null;
+		this._connections[connectedLtr] = null;
 	    }
-
-	    //alert(socket.dataset.letterNb);
 	},
 
+        /*
+	 * Checks whether a connection exists for a given letter number then returns 
+	 * the corresponding letter number .
+	 *
+	 * @param integer letterNb      The input letter number.
+	 * 
+	 * @return integer  The output letter number.
+	 */
         output: function (letterNb) {
-console.log('plugboard input: '+letterNb);
+	    // The given letter is not connected.
 	    if (!this._connections[letterNb] && this._connections.indexOf(letterNb) === -1) {
-console.log('plugboard output no connection: '+letterNb);
 	        return letterNb;
 	    }
 

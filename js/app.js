@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const plugboard = new CPlugboard.init();
 
-    //let keys = document.getElementsByClassName('keys');
     let keys = document.querySelectorAll('.keys');
 
     keys.forEach((key) => {
@@ -62,8 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const rotor = rotors['rotor'+rotorId].backward();
     }
 
+    /*
+     * Send the pressed letter through the encrypting process then returns 
+     * the result. 
+     *
+     * @param integer letterNb      The pressed letter number.
+     * 
+     * @return integer  The output letter number.
+     */
     function swapLetter(letter) {
-
+        // Check for the notches and advance the rotors accordingly.
 	if (rotor3.getNotch() == rotor2.getNotch() && rotor2.getStepNb() == rotor3.getNbOfTurns()) {
 	    rotor2.stepForward();
 	}
@@ -72,23 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	    rotor1.stepForward();
 	}
 
+        // Advance the third rotor before starting the encrypting process.
         rotor3.stepForward();
 
         // Grab the letter number associated to the pressed key.
 	let letterNb = _alphabet.indexOf(letter);
 
+        // First, send the letter through the plugboard
         letterNb = plugboard.output(letterNb);
-
+        // then through the 3 rotors from right to left.
         letterNb = rotor3.getLeftOutput(letterNb, 0);
         letterNb = rotor2.getLeftOutput(letterNb, rotor3.getPosition());
         letterNb = rotor1.getLeftOutput(letterNb, rotor2.getPosition());
-
+        // Send the letter through the reflector
         letterNb = reflector.getOutput(letterNb, rotor1.getPosition());
-
+        // then send it again through the 3 rotors from left to right.
         letterNb = rotor1.getRightOutput(letterNb, rotor2.getPosition());
         letterNb = rotor2.getRightOutput(letterNb, rotor3.getPosition());
         letterNb = rotor3.getRightOutput(letterNb, 0);
-
+        // Finally send the letter through the plugboard again.
         letterNb = plugboard.output(letterNb);
 
 	return _alphabet[letterNb];
