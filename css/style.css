@@ -1,8 +1,32 @@
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result {
+    width: 650px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    width: 500px;
+}
+
 .enigma {
     width: 650px;
     margin: auto;
     background-color: #d1d1d1;
     border-width: 10px; border-style: solid; border-color: #da7d00;
+}
+
+.logo {
+    overflow: hidden;
+    float: right;
+}
+
+.upside{
+    overflow: hidden;
 }
 
 .keys, .bulbs {
@@ -73,8 +97,8 @@
 }
 
 .rotors {
+    float: left;
     background-color: #d1d1d1;
-    overflow: hidden;
     padding-top: 20px;
     margin-left: 20px;
 }

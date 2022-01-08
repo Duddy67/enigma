@@ -39,7 +39,7 @@ CRotor = (function () {
 	    let rotorContainer = document.createElement('div');
 	    rotorContainer.setAttribute('id', 'rotorContainer_'+this._id);
 	    rotorContainer.setAttribute('class', 'rotorContainer');
-	    document.getElementById('enigma').appendChild(rotorContainer);
+	    document.getElementById('upside').appendChild(rotorContainer);
 	    let rotorLeftSide = document.createElement('div');
 	    rotorLeftSide.setAttribute('id', 'rotorLeftSide_'+this._id);
 	    rotorLeftSide.setAttribute('class', 'rotorLeftSide');

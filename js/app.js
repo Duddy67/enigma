@@ -100,6 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Finally send the letter through the plugboard again.
         letterNb = plugboard.output(letterNb);
 
+        // Add the output letter to the message box.
+	document.getElementById('message').value += _alphabet[letterNb];
+
 	return _alphabet[letterNb];
     }
 });
