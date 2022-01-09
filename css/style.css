@@ -16,8 +16,9 @@
 .enigma {
     width: 650px;
     margin: auto;
-    background-color: #d1d1d1;
+    background-color: #545454;
     border-width: 10px; border-style: solid; border-color: #da7d00;
+    border-radius: 0.5rem;
 }
 
 .logo {
@@ -45,6 +46,7 @@
     padding: 12px 0;
     font-size: 16px;
     color: #fff;
+    border-width: 1px; border-style: solid; border-color: #d1d1d1;
 }
 
 .switchedOn {
@@ -74,12 +76,11 @@
 }
 
 .keyContainer {
-    background-color: #a1a1a1;
     padding: 15px;
+    border-top: 2px solid black;
 }
 
 .bulbContainer {
-    background-color: #d1d1d1;
     border-top: 2px solid black;
     padding: 15px;
 }
@@ -98,17 +99,15 @@
 
 .rotors {
     float: left;
-    background-color: #d1d1d1;
     padding-top: 20px;
     margin-left: 20px;
 }
 
 .rotorContainer {
-    background-color: #d1d1d1;
     overflow: hidden;
-    width: 50px;
+    width: 70px;
     height: 140px;
-    margin-right: 20px;
+    margin-right: 60px;
     margin-bottom: 10px;
 }
 
@@ -140,7 +139,7 @@
 
 .wheel {
     float: right;
-    background-color: #3d3d3d;
+    background-color: #d1d1d1;
     width: 10px;
     height: 140px;
 }
@@ -150,9 +149,9 @@
 }
 
 .plugboardContainer {
-    background-color: #ddd;
     padding-top: 15px;
     padding-bottom: 15px;
+    border-top: 2px solid black;
 }
 
 .plugboardRows {
@@ -166,7 +165,6 @@
 }
 
 .socketContainer {
-    background-color: #ddd;
     float: left;
     text-align: center;
     margin-right: 25px;
@@ -174,14 +172,16 @@
 
 .socketLabel {
     margin-bottom: 0 !important;
+    color: #fff;
 }
 
 .socketLetter {
+    background-color: #ddd;
     border-style: inset;
     border-width: 2px;
     width: 20px;
     text-align: center;
-    color: #999;
+    color: #545454;
 }
 
 .sockets {
