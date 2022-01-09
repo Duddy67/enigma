@@ -61,6 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const rotor = rotors['rotor'+rotorId].backward();
     }
 
+    document.getElementById('reset').addEventListener('click', function() {
+        rotor3.reset();
+        rotor2.reset();
+        rotor1.reset();
+	document.getElementById('message').value = '';
+    }, true);
+
     /*
      * Send the pressed letter through the encrypting process then returns 
      * the result. 

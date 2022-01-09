@@ -240,6 +240,23 @@ CRotor = (function () {
 	 */
         getNbOfTurns: function () {
 	    return this._turns;
+	},
+
+	/*
+	 * Reset the rotor and its notch to their initial position. 
+	 *
+	 * @return void
+	 */
+        reset: function () {
+	    this._position = 0;
+	    this._notch = _alphabet.indexOf(_notches['_notch_'+this._id]);
+	    this._step = 0;
+	    this._turns = 0;
+
+	    // Refresh the position number.
+            let newPos = this._position + 1;
+	    let position = document.getElementById('positionNumber_'+this._id);
+	    position.textContent = newPos < 10 ? '0'+newPos : newPos;
 	}
     };
 
